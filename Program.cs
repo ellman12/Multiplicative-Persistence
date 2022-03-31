@@ -1,6 +1,4 @@
 ﻿using System.Numerics;
-using System.Timers;
-using Timer = System.Timers.Timer;
 
 Console.Write("How many threads? ");
 int numThreads = Convert.ToInt32(Console.ReadLine());
@@ -24,21 +22,24 @@ for (int i = 0; i < threads.Length; i++)
 	threads[i].Start();
 }
 
-void OnTimerElapsed(object source, ElapsedEventArgs e) => Print();
-Timer printTimer = new(1000);
-printTimer.Elapsed += OnTimerElapsed!;
-printTimer.Start();
+while (true)
+{
+	Print();
+}
 
 void Print()
 {
 	string output = "";
 
 	for (int i = 0; i < stepsArray.Length; i++)
-		if (stepsArray[i] > 3)
+		if (stepsArray[i] > 7)
 			output += $"Thread {i}: {currentNumbers[i]}\tSteps: {stepsArray[i]}\t";
-
+	
 	if (output != "")
+	{
+		output += DateTime.Now.ToString("T");
 		Console.WriteLine(output);
+	}
 }
 
 void InfinitePersistence(ref BigInteger bigInt, ref int steps)
@@ -46,8 +47,8 @@ void InfinitePersistence(ref BigInteger bigInt, ref int steps)
 	while (true)
 	{
 		Persistence(bigInt, ref steps);
-		steps = 0;
 		bigInt++;
+		steps = 0;
 	}
 }
 

@@ -14,7 +14,7 @@ for (int i = 0; i < threads.Length; i++)
 	int ii = i;
 	stepsArray[i] = 0;
 	currentNumbers[i] = startNum + i;
-	threads[i] = new Thread(() => InfinitePersistence(ref currentNumbers[ii], ref stepsArray[ii]))
+	threads[i] = new Thread(() => InfinitePersistence(ref currentNumbers[ii], ref stepsArray[ii], ii))
 	{
 		Priority = ThreadPriority.Highest, //TODO: do these make a difference?
 		IsBackground = false
@@ -22,32 +22,13 @@ for (int i = 0; i < threads.Length; i++)
 	threads[i].Start();
 }
 
-while (true)
-{
-	Print();
-}
-
-void Print()
-{
-	string output = "";
-
-	for (int i = 0; i < stepsArray.Length; i++)
-		if (stepsArray[i] > 7)
-			output += $"Thread {i}: {currentNumbers[i]}\tSteps: {stepsArray[i]}\t";
-	
-	if (output != "")
-	{
-		output += DateTime.Now.ToString("T");
-		Console.WriteLine(output);
-	}
-}
-
-void InfinitePersistence(ref BigInteger bigInt, ref int steps)
+void InfinitePersistence(ref BigInteger currentNumber, ref int steps, int threadNum)
 {
 	while (true)
 	{
-		Persistence(bigInt, ref steps);
-		bigInt++;
+		Persistence(currentNumber, ref steps);
+		currentNumber++;
+		if (steps > 8) Console.WriteLine($"Thread {threadNum}: {currentNumber}\tSteps: {steps}\t{DateTime.Now.ToString("hh:mm:ss fffffff tt")}");
 		steps = 0;
 	}
 }

@@ -6,6 +6,9 @@ int numThreads = Convert.ToInt32(Console.ReadLine());
 Console.Write("Starting Number? ");
 BigInteger startNum = BigInteger.Parse(Console.ReadLine()!);
 
+Console.Write("Above what value should number of steps be printed? ");
+int interestedStepSize = Convert.ToInt32(Console.ReadLine());
+
 Thread[] threads = new Thread[numThreads];
 BigInteger[] currentNumbers = new BigInteger[numThreads];
 int[] stepsArray = new int[numThreads];
@@ -28,7 +31,7 @@ void InfinitePersistence(ref BigInteger currentNumber, ref int steps, int thread
 	{
 		Persistence(currentNumber, ref steps);
 		currentNumber++;
-		if (steps > 8) Console.WriteLine($"Thread {threadNum}: {currentNumber}\tSteps: {steps}\t{DateTime.Now.ToString("hh:mm:ss fffffff tt")}");
+		if (steps > interestedStepSize) Console.WriteLine($"Thread {threadNum}: {currentNumber}\tSteps: {steps}\t{DateTime.Now.ToString("hh:mm:ss tt")}");
 		steps = 0;
 	}
 }

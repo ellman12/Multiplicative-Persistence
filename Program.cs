@@ -9,6 +9,9 @@ BigInteger startNum = BigInteger.Parse(Console.ReadLine()!);
 Console.Write("Above what value should number of steps be printed? ");
 int interestedStepSize = Convert.ToInt32(Console.ReadLine());
 
+Console.Write("How often to print current numbers of each thread (in ms)? ");
+int printDelay = Convert.ToInt32(Console.ReadLine());
+
 Thread[] threads = new Thread[numThreads];
 BigInteger[] currentNumbers = new BigInteger[numThreads];
 int[] stepsArray = new int[numThreads];
@@ -23,6 +26,17 @@ for (int i = 0; i < threads.Length; i++)
 		IsBackground = false
 	};
 	threads[i].Start();
+}
+
+while (true)
+{
+	Console.WriteLine("Current Numbers: ");
+	for (int i = 0; i < currentNumbers.Length; i++)
+	{
+		Console.WriteLine($"Thread {i}: {currentNumbers[i]}\t");
+	}
+	Console.WriteLine("-------------------------------------------------------------------------");
+	Thread.Sleep(printDelay);
 }
 
 void InfinitePersistence(ref BigInteger currentNumber, ref int steps, int threadNum)

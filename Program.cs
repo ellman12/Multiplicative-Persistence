@@ -4,7 +4,10 @@ Console.Write("How many threads? ");
 int numThreads = Convert.ToInt32(Console.ReadLine());
 
 Console.Write("Starting Number? ");
-BigInteger startNum = BigInteger.Parse(Console.ReadLine()!);
+string startNumStr = Console.ReadLine()!;
+string dividerLine = "----------";
+for (int i = 0; i < startNumStr.Length; i++) dividerLine += '-';
+BigInteger startNum = BigInteger.Parse(startNumStr);
 
 Console.Write("Above what value should number of steps be printed? ");
 int interestedStepSize = Convert.ToInt32(Console.ReadLine());
@@ -22,7 +25,7 @@ for (int i = 0; i < threads.Length; i++)
 	currentNumbers[i] = startNum + i;
 	threads[i] = new Thread(() => InfinitePersistence(ref currentNumbers[ii], ref stepsArray[ii], ii))
 	{
-		Priority = ThreadPriority.Highest, //TODO: do these make a difference?
+		Priority = ThreadPriority.Highest,
 		IsBackground = false
 	};
 	threads[i].Start();
@@ -30,12 +33,12 @@ for (int i = 0; i < threads.Length; i++)
 
 while (true)
 {
-	Console.WriteLine("Current Numbers: ");
+	Console.WriteLine($"{DateTime.Now:h:mm:ss tt} Current Numbers: ");
 	for (int i = 0; i < currentNumbers.Length; i++)
 	{
 		Console.WriteLine($"Thread {i}: {currentNumbers[i]}\t");
 	}
-	Console.WriteLine("-------------------------------------------------------------------------");
+	Console.WriteLine(dividerLine);
 	Thread.Sleep(printDelay);
 }
 

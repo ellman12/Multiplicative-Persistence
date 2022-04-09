@@ -1,12 +1,11 @@
-﻿using System.Numerics;
+using System.Numerics;
 
 Console.Write("How many threads? ");
 int numThreads = Convert.ToInt32(Console.ReadLine());
 
 Console.Write("Starting Number? ");
 string startNumStr = Console.ReadLine()!;
-string dividerLine = "----------";
-for (int i = 0; i < startNumStr.Length; i++) dividerLine += '-';
+string dividerLine = "----------" + new string('-', startNumStr.Length); //This start string accounts for the "Thread x: " text that is always printed. Also adds perfect amount of '-'.
 BigInteger startNum = BigInteger.Parse(startNumStr);
 
 Console.Write("Above what value should number of steps be printed? ");
